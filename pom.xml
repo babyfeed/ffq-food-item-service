@@ -13,7 +13,20 @@
 	<version>0.0.2-SNAPSHOT</version>
 	<name>FFQ Food Item Service</name>
 	<description>Service for accessing FFQ food entries to populate questionnaire.</description>
-
+        
+        <repositories>
+            <repository>
+                <id>spring-releases</id>
+                <url>https://repo.spring.io/libs-release</url>
+            </repository>
+        </repositories>
+        <pluginRepositories>
+            <pluginRepository>
+                <id>spring-releases</id>
+                <url>https://repo.spring.io/libs-release</url>
+            </pluginRepository>
+        </pluginRepositories>
+        
 	<properties>
 		<java.version>1.8</java.version>
 		<jackson.databind.version>2.9.8</jackson.databind.version>
