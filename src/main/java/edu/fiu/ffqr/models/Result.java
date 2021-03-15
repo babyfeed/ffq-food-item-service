@@ -1,11 +1,12 @@
 package edu.fiu.ffqr.models;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 @Document(collection="results")
 public class Result {
@@ -87,11 +88,11 @@ public class Result {
 	}
         
     public String getUserType() {
-		return userId;
+		return userType;
 	}
 
 	public void setUserType(String userType) {
-		this.userId = userType;
+		this.userType = userType;
 	}
 
 	public String getDate() {
