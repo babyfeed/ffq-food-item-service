@@ -238,11 +238,11 @@ public class FoodRecommendationController {
 			calculatedAmount = categoryValueMap.get(sysFoodItemRecommendation.getCategoryName());
 			foodItemRec.setCalculatedAmount(calculatedAmount);
 			
-			if(infantAge >= 0 && infantAge <= 6){
-				ageRange = "0-6";
+			if(infantAge >= 0 && infantAge <= 5){
+				ageRange = "0-5";
 			}
-			else if(infantAge >= 7 && infantAge <= 12){
-				ageRange = "7-12";
+			else if(infantAge >= 6 && infantAge <= 12){
+				ageRange = "6-12";
 			}
 			else if(infantAge >= 13 && infantAge <= 24){
 				ageRange = "13-24";
