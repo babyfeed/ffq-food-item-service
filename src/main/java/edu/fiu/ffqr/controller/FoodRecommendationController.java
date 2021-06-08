@@ -115,7 +115,7 @@ public class FoodRecommendationController {
 			for (SysFoodRecommendation sysFoodItemRecommendation: SysFoodItemRecommendations) {
 				
 				String categoryName = sysFoodItemRecommendation.getCategoryName();
-				System.out.println("Food item = " + categoryName + "\n.");
+
 				if(category.equalsIgnoreCase(categoryName))
 				{
 					double currentTotal = 0.0;
