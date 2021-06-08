@@ -71,6 +71,7 @@ public class FoodRecommendationController {
 		String ageRange = "";
 		Double calculatedAmount = 0.0;		
 		Map<String, Double> categoryValueMap = new HashMap<String, Double>();
+		boolean exclusivelyBreastfed = true; //boolean for if baby is exclusively breastfed. if another fooditem is passed as having a value it will turn false
 		
 		// get results for given questionnaire
 		Result result = resultsService.getResultByQuestionnaireID(questionnaireID);
@@ -114,7 +115,7 @@ public class FoodRecommendationController {
 			for (SysFoodRecommendation sysFoodItemRecommendation: SysFoodItemRecommendations) {
 				
 				String categoryName = sysFoodItemRecommendation.getCategoryName();
-				
+				System.out.println("Food item = " + categoryName + "\n.");
 				if(category.equalsIgnoreCase(categoryName))
 				{
 					double currentTotal = 0.0;
@@ -130,7 +131,7 @@ public class FoodRecommendationController {
 							if (foodItem.getFrequencyType().equalsIgnoreCase("Week")) {
 								currentTotal = currentTotal / 7;
 							}
-							
+							exclusivelyBreastfed = false;
 							categoryValueMap.replace(categoryName, categoryValueMap.get(categoryName) + currentTotal);
 						}
 						else if(nutrientListID.equalsIgnoreCase("yogu")) {
@@ -140,7 +141,7 @@ public class FoodRecommendationController {
 							if (foodItem.getFrequencyType().equalsIgnoreCase("Week")) {
 								currentTotal = currentTotal / 7;
 							}
-							
+							exclusivelyBreastfed = false;
 							categoryValueMap.replace(categoryName, categoryValueMap.get(categoryName) + currentTotal);
 						}
 						else if(nutrientListID.equalsIgnoreCase("soyp")) {
@@ -150,7 +151,7 @@ public class FoodRecommendationController {
 							if (foodItem.getFrequencyType().equalsIgnoreCase("Week")) {
 								currentTotal = currentTotal / 7;
 							}
-							
+							exclusivelyBreastfed = false;
 							categoryValueMap.replace(categoryName, categoryValueMap.get(categoryName) + currentTotal);
 						}
 						else if(nutrientListID.equalsIgnoreCase("icec")) {
@@ -160,7 +161,14 @@ public class FoodRecommendationController {
 							if (foodItem.getFrequencyType().equalsIgnoreCase("Week")) {
 								currentTotal = currentTotal / 7;
 							}
-							
+							exclusivelyBreastfed = false;
+							categoryValueMap.replace(categoryName, categoryValueMap.get(categoryName) + currentTotal);
+						}
+						else if(nutrientListID.equalsIgnoreCase("brea")) {
+							currentTotal = foodItem.getFrequency();
+							if (foodItem.getFrequencyType().equalsIgnoreCase("Week")) {
+								currentTotal /= 7;
+							}
 							categoryValueMap.replace(categoryName, categoryValueMap.get(categoryName) + currentTotal);
 						}
 						else {
@@ -169,7 +177,7 @@ public class FoodRecommendationController {
 							if (foodItem.getFrequencyType().equalsIgnoreCase("Week")) {
 								currentTotal = currentTotal / 7;
 							}
-							
+							exclusivelyBreastfed = false;
 							categoryValueMap.replace(categoryName, categoryValueMap.get(categoryName) + currentTotal);
 						}												
 					}
@@ -183,6 +191,7 @@ public class FoodRecommendationController {
 								currentTotal = currentTotal / 7;
 							}
 							
+							exclusivelyBreastfed = false;
 							categoryValueMap.replace(categoryName, categoryValueMap.get(categoryName) + currentTotal);
 					}
 					else if(nutrientListID.equalsIgnoreCase("pancwhol")) {
@@ -192,7 +201,7 @@ public class FoodRecommendationController {
 							if (foodItem.getFrequencyType().equalsIgnoreCase("Week")) {
 								currentTotal = currentTotal / 7;
 							}
-							
+							exclusivelyBreastfed = false;
 							categoryValueMap.replace(categoryName, categoryValueMap.get(categoryName) + currentTotal);
 					}
 					else if(nutrientListID.equalsIgnoreCase("hone")) {
@@ -202,7 +211,7 @@ public class FoodRecommendationController {
 						if (foodItem.getFrequencyType().equalsIgnoreCase("Week")) {
 							currentTotal = currentTotal / 7;
 						}
-						
+						exclusivelyBreastfed = false;
 						categoryValueMap.replace(categoryName, categoryValueMap.get(categoryName) + currentTotal);
 					}
 					else if(nutrientListID.equalsIgnoreCase("cook")) {
@@ -212,7 +221,7 @@ public class FoodRecommendationController {
 						if (foodItem.getFrequencyType().equalsIgnoreCase("Week")) {
 							currentTotal = currentTotal / 7;
 						}
-						
+						exclusivelyBreastfed = false;
 						categoryValueMap.replace(categoryName, categoryValueMap.get(categoryName) + currentTotal);
 					}
 					else
@@ -222,7 +231,7 @@ public class FoodRecommendationController {
 						if (foodItem.getFrequencyType().equalsIgnoreCase("Week")) {
 							currentTotal = currentTotal / 7;
 						}
-						
+						exclusivelyBreastfed = false;
 						categoryValueMap.replace(categoryName, categoryValueMap.get(categoryName) + currentTotal);
 					}
 					}
@@ -253,13 +262,19 @@ public class FoodRecommendationController {
 			List<FoodRecommendationRange> rangeList = sysFoodItemRecommendation.getRecommendationsByAge().get(ageRange);
 			
 			boolean notFound = true;
-			
+
 			for (FoodRecommendationRange range: rangeList) {
 				if (calculatedAmount >= range.getFrom() && calculatedAmount <= range.getTo() && notFound)
 				{
+					//if statement checks first to see if exclusively breastfed is true. if so, it will manually make the label 'adequate'
+					//since babies that are exclusively breastfed are always getting adequate milk according to the PO
+					if (exclusivelyBreastfed && (sysFoodItemRecommendation.getCategoryName().equalsIgnoreCase("Breastmilk/Formula/Cows Milk/Other milks"))) {
+						foodItemRec.setLabel("Adequate");
+					} else { 
+						foodItemRec.setLabel(range.getLabel());
+					}
 					foodItemRec.setRangeFrom(range.getFrom());
 					foodItemRec.setRangeTo(range.getTo());
-					foodItemRec.setLabel(range.getLabel());
 					notFound = false;
 				}
 			}	
