@@ -36,7 +36,7 @@
 
   {
     "categoryName": "Fruits", "unit":"fl oz/day","recommendationsByAge": {
-    "0-5":[{ "from":0, "to":0, "label": "Adequate"},{ "from":1, "to":1000000, "label": "Above"}],
+    "0-5":[{ "from":0, "to":0, "label": "Adequate"},{ "from":0.1, "to":1000000, "label": "Above"}],
     "6-12": [{ "from":0, "to":0, "label": "Below"},{ "from":0.1, "to":1.9, "label": "Little below"},{ "from":2, "to":1000000, "label": "Adequate"}],
     "13-24": [{ "from":0, "to":0, "label": "Below"},{ "from":0.1, "to":7.9, "label": "Little below"},{ "from":8, "to":1000000, "label": "Adequate"}]}
   },
