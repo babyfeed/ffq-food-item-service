@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.lang.Math;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -115,12 +116,10 @@ public class FoodRecommendationController {
 			for (SysFoodRecommendation sysFoodItemRecommendation: SysFoodItemRecommendations) {
 				
 				String categoryName = sysFoodItemRecommendation.getCategoryName();
-
+				
 				if(category.equalsIgnoreCase(categoryName))
 				{
 					double currentTotal = 0.0;
-					
-					System.out.println(categoryValueMap.get(categoryName));
 					
 					if(foodItem.getServing() == null)
 					{
@@ -262,9 +261,11 @@ public class FoodRecommendationController {
 			List<FoodRecommendationRange> rangeList = sysFoodItemRecommendation.getRecommendationsByAge().get(ageRange);
 			
 			boolean notFound = true;
-
+			double compareValue = Math.floor(calculatedAmount * 10) / 10.0;
+			//compareValue is used to account for the grey areas in the payload. it rounds down the calculated amount to 1 decimal place
+			//so all food categories will get a proper label
 			for (FoodRecommendationRange range: rangeList) {
-				if (calculatedAmount >= range.getFrom() && calculatedAmount <= range.getTo() && notFound)
+				if (compareValue >= range.getFrom() && compareValue <= range.getTo() && notFound)
 				{
 					//if statement checks first to see if exclusively breastfed is true. if so, it will manually make the label 'adequate'
 					//since babies that are exclusively breastfed are always getting adequate milk according to the PO
