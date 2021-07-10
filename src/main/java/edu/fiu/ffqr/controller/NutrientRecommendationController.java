@@ -252,7 +252,7 @@ public class NutrientRecommendationController {
 				status = status.concat("%)");
 			} else {
 				// status = "Normal (" + percentageOfRecommended + "%)";
-				status = "Normal (";
+				status = "Adequate (";
 				status = status.concat(Double.toString(percentageOfRecommended));
 				status = status.concat("%)");
 			}
