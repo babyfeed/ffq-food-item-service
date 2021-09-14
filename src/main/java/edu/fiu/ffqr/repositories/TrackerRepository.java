@@ -10,4 +10,6 @@ import edu.fiu.ffqr.models.TrackerResult;
 public interface TrackerRepository extends MongoRepository<TrackerResult, String> {
 
 	List<TrackerResult> findByUserId(String userId);
+
+	TrackerResult findBy_id(ObjectId _id);
 }

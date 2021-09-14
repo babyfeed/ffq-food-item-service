@@ -22,8 +22,16 @@ public class TrackerResultsService {
 	public List<TrackerResult> getResultsByUserId(String userId) {
 		return trackerRepository.findByUserId(userId);
 	}
+
+	public TrackerResult findById(ObjectId id) {
+		return trackerRepository.findBy_id(id);
+    }
 	
 	public TrackerResult create(TrackerResult results) {	
 		return trackerRepository.save(results);
 	}
+
+	public TrackerResult update(String goal) { 
+        return trackerRepository.save(goal);
+    }
 }

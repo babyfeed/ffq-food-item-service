@@ -23,17 +23,25 @@ public class TrackerResult {
 	@JsonProperty("responses")
 	ArrayList<TrackerItem> responses;
 
+	@JsonProperty("goal")
+	private String goal;
+
 	public TrackerResult(String userId, int age, String date, ArrayList<TrackerItem> responses){
+		this.id = new ObjectId();
 		this.userId = userId;
 		this.age = age;
 		this.date = date;
 		this.responses = responses;
+		this.goal = "";
 	}
 	
 	public ObjectId getId() {
 		return id;
 	}
 
+	public String get_id() {
+		return id.toHexString();
+	}
 	public void setId(ObjectId id) {
 		this.id = id;
 	}
@@ -60,5 +68,13 @@ public class TrackerResult {
 
 	public void setResponses(ArrayList<TrackerItem> responses) {
 		this.responses = responses;
+	}
+
+	public String getGoal() {
+		return goal;
+	}
+
+	public void setUserId(String goal) {
+		this.goal = goal;
 	}
 }

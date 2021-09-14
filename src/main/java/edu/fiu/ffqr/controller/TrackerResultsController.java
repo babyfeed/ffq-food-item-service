@@ -43,4 +43,34 @@ public class TrackerResultsController {
 		TrackerResult result = trackerResultsService.create(data);
 		return result;
 	}
+
+	@PutMapping("/update/{id}")
+	public TrackerResult updateGoal(@PathVariable ObjectId id, @RequestBody TrackerResult data) throws JsonProcessingException {
+		
+        TrackerResult trItem = trackerResultsService.findById(id);
+
+        if (null == trItem) {
+            throw new IllegalArgumentException("The tracker result id does not exist");
+        }
+
+        if (data.getUserId() != null) {
+            trItem.setUserId(data.getUserId());
+        }
+
+        if (data.getAge() != null) {
+            fdItem.setAge(data.getAge());
+        }
+
+        if (data.getResponses() != null) {
+            fdItem.setResponses(data.getResponses());
+        }
+
+        if (data.getGoal() != null) {
+            fdItem.setGoal(data.getGoal());
+        }
+
+        trackerResultsService.update(trItem);
+
+        return trItem;
+    }
 }
