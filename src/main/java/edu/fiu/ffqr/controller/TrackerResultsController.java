@@ -16,6 +16,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import edu.fiu.ffqr.models.TrackerResult;
 import edu.fiu.ffqr.service.TrackerResultsService;
 
+import org.bson.types.ObjectId;
+import org.springframework.web.bind.annotation.PutMapping;
+
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/tracker")
@@ -57,16 +60,14 @@ public class TrackerResultsController {
             trItem.setUserId(data.getUserId());
         }
 
-        if (data.getAge() != null) {
-            fdItem.setAge(data.getAge());
-        }
+
 
         if (data.getResponses() != null) {
-            fdItem.setResponses(data.getResponses());
+            trItem.setResponses(data.getResponses());
         }
 
         if (data.getGoal() != null) {
-            fdItem.setGoal(data.getGoal());
+            trItem.setGoal(data.getGoal());
         }
 
         trackerResultsService.update(trItem);

@@ -4,6 +4,8 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.bson.types.ObjectId;
+
 
 @Document(collection="tracker")
 public class TrackerResult {
@@ -73,8 +75,7 @@ public class TrackerResult {
 	public String getGoal() {
 		return goal;
 	}
-
-	public void setUserId(String goal) {
-		this.goal = goal;
+	public String setGoal(String goal) {
+		return this.goal = goal;
 	}
 }

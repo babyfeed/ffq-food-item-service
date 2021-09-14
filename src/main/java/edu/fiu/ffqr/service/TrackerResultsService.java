@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import edu.fiu.ffqr.models.TrackerResult;
 import edu.fiu.ffqr.repositories.TrackerRepository;
 
+import org.bson.types.ObjectId;
+
 @Service
 @Component
 public class TrackerResultsService {
@@ -31,7 +33,7 @@ public class TrackerResultsService {
 		return trackerRepository.save(results);
 	}
 
-	public TrackerResult update(String goal) { 
-        return trackerRepository.save(goal);
+	public TrackerResult update(TrackerResult results) { 
+        return trackerRepository.save(results);
     }
 }
