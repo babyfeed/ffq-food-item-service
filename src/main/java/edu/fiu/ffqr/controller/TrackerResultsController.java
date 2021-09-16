@@ -47,7 +47,7 @@ public class TrackerResultsController {
 		return result;
 	}
 
-	@PutMapping("/update")
+	@PutMapping("/tracker/update")
 	public TrackerResult update(@RequestBody TrackerResult data) throws JsonProcessingException {
 
 			String id = data.getId();
