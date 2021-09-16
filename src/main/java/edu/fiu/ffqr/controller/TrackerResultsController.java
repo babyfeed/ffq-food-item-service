@@ -47,24 +47,32 @@ public class TrackerResultsController {
 		return result;
 	}
 
+	/*
+	PUT request that updates the goal for a Tracker result
+	*/
 	@PutMapping("/tracker/update")
 	public TrackerResult update(@RequestBody TrackerResult data) throws JsonProcessingException {
 
+			// Gets ID of the TrackerResult being updated
 			String id = data.getId();
 
+			// Make sure the ID exists
 			if (null == id) {
 			throw new IllegalArgumentException("Missing Tracker Result ID");
 			}
 		
+			// Get the tracker result object with the given ID
 			TrackerResult trItem = trackerResultsService.findById(id);
+			// Make sure the object exists
 			if (null == trItem) {
 			throw new IllegalArgumentException("Invalid Tracker Result ID");
 			}
-        if (data.getGoal() != null) {
+			// Update object's goal
+			if (data.getGoal() != null) {
             trItem.setGoal(data.getGoal());
-        }
+			}
 
-        trackerResultsService.update(trItem);
+			trackerResultsService.update(trItem);
 
         return trItem;
     }

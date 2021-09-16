@@ -27,6 +27,7 @@ public class TrackerResultsService {
 	}
 
 	public TrackerResult findById(String id) {
+		// Change String ID into an ObjectID so the tracker result repository can find the object
 		_id = new ObjectId(id)
 		return trackerRepository.findBy_id(_id);
     }
