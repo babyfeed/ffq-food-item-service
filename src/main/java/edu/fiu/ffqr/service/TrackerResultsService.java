@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import edu.fiu.ffqr.models.TrackerResult;
 import edu.fiu.ffqr.repositories.TrackerRepository;
 
-import org.bson.types.ObjectId;
 
 @Service
 @Component
@@ -25,7 +24,7 @@ public class TrackerResultsService {
 		return trackerRepository.findByUserId(userId);
 	}
 
-	public TrackerResult findById(ObjectId id) {
+	public TrackerResult findById(String id) {
 		return trackerRepository.findBy_id(id);
     }
 	

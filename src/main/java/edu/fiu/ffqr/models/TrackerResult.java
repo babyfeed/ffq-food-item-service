@@ -11,7 +11,7 @@ import org.bson.types.ObjectId;
 public class TrackerResult {
 	
 	@Id
-	private ObjectId id;
+	private String _id;
 	
 	@JsonProperty("userId")
 	private String userId;
@@ -29,23 +29,19 @@ public class TrackerResult {
 	private String goal;
 
 	public TrackerResult(String userId, int age, String date, ArrayList<TrackerItem> responses){
-		this.id = new ObjectId();
+		this._id = new ObjectId().toHexString();
 		this.userId = userId;
 		this.age = age;
 		this.date = date;
 		this.responses = responses;
-		this.goal = "";
+		this.goal = "test";
 	}
 	
-	public ObjectId getId() {
-		return id;
+	public String getId() {
+		return _id;
 	}
-
-	public String get_id() {
-		return id.toHexString();
-	}
-	public void setId(ObjectId id) {
-		this.id = id;
+	public void setId(String id) {
+		this._id = id;
 	}
 
 	public String getUserId() {
