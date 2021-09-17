@@ -50,7 +50,7 @@ public class TrackerResultsController {
 	/*
 	PUT request that updates the goal for a Tracker result
 	*/
-	@PutMapping("/tracker/update")
+	@PutMapping("/update")
 	public TrackerResult update(@RequestBody TrackerResult data) throws JsonProcessingException {
 
 			// Gets ID of the TrackerResult being updated
