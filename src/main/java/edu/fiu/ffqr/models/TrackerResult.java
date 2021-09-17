@@ -34,7 +34,7 @@ public class TrackerResult {
 		this.age = age;
 		this.date = date;
 		this.responses = responses;
-		this.goal = "test";
+		this.goal = "";
 	}
 	
 	public String getId() {
