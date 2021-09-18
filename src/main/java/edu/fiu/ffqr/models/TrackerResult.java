@@ -4,12 +4,14 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.bson.types.ObjectId;
+
 
 @Document(collection="tracker")
 public class TrackerResult {
 	
 	@Id
-	private ObjectId id;
+	private String _id;
 	
 	@JsonProperty("userId")
 	private String userId;
@@ -23,19 +25,23 @@ public class TrackerResult {
 	@JsonProperty("responses")
 	ArrayList<TrackerItem> responses;
 
+	@JsonProperty("goal")
+	private String goal;
+
 	public TrackerResult(String userId, int age, String date, ArrayList<TrackerItem> responses){
+		this._id = new ObjectId().toHexString();
 		this.userId = userId;
 		this.age = age;
 		this.date = date;
 		this.responses = responses;
+		this.goal = "";
 	}
 	
-	public ObjectId getId() {
-		return id;
+	public String getId() {
+		return _id;
 	}
-
-	public void setId(ObjectId id) {
-		this.id = id;
+	public void setId(String id) {
+		this._id = id;
 	}
 
 	public String getUserId() {
@@ -60,5 +66,12 @@ public class TrackerResult {
 
 	public void setResponses(ArrayList<TrackerItem> responses) {
 		this.responses = responses;
+	}
+
+	public String getGoal() {
+		return goal;
+	}
+	public String setGoal(String goal) {
+		return this.goal = goal;
 	}
 }

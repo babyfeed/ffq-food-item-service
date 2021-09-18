@@ -16,6 +16,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import edu.fiu.ffqr.models.TrackerResult;
 import edu.fiu.ffqr.service.TrackerResultsService;
 
+import org.bson.types.ObjectId;
+import org.springframework.web.bind.annotation.PutMapping;
+
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/tracker")
@@ -43,4 +46,34 @@ public class TrackerResultsController {
 		TrackerResult result = trackerResultsService.create(data);
 		return result;
 	}
+
+	/*
+	PUT request that updates the goal for a Tracker result
+	*/
+	@PutMapping("/update")
+	public TrackerResult update(@RequestBody TrackerResult data) throws JsonProcessingException {
+
+			// Gets ID of the TrackerResult being updated
+			String id = data.getId();
+
+			// Make sure the ID exists
+			if (null == id) {
+			throw new IllegalArgumentException("Missing Tracker Result ID");
+			}
+		
+			// Get the tracker result object with the given ID
+			TrackerResult trItem = trackerResultsService.findById(id);
+			// Make sure the object exists
+			if (null == trItem) {
+			throw new IllegalArgumentException("Invalid Tracker Result ID");
+			}
+			// Update object's goal
+			if (data.getGoal() != null) {
+            trItem.setGoal(data.getGoal());
+			}
+
+			trackerResultsService.update(trItem);
+
+        return trItem;
+    }
 }
