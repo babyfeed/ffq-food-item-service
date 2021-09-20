@@ -19,15 +19,15 @@ public class ResultsService {
 	private FFQResponsesRepository responsesRepository;
 	
 	public List<Result> getAll() {
-		return responsesRepository.findAll();
+		return responsesRepository.findByActiveIsTrue();
 	}
 
 	public List<Result> findByUserType(String userType) {
-		return responsesRepository.findByUserType(userType);
+		return responsesRepository.findByUserTypeAndActiveIsTrue(userType);
 	}
 
 	public List<Result> getResultsByUserId(String userId) {
-		return responsesRepository.findByUserId(userId);
+		return responsesRepository.findByUserIdAndActiveIsTrue(userId);
 	}
 
 	public List<Result> deleteResultsByUserId(String userId) {
@@ -39,7 +39,7 @@ public class ResultsService {
 	}
 	
     public Result getResultByQuestionnaireID(String questionnaireId) {
-    	return responsesRepository.findByQuestionnaireId(questionnaireId);
+    	return responsesRepository.findByQuestionnaireIdAndActiveIsTrue(questionnaireId);
     }
 
 	public Result update(Result updatedItem) {
@@ -48,6 +48,8 @@ public class ResultsService {
 
 	public void delete(String questionnaireId) {
 		Result questionnaireResult = getResultByQuestionnaireID(questionnaireId);
-		responsesRepository.delete(questionnaireResult);
+		questionnaireResult.delete();
+		responsesRepository.save(questionnaireResult);
 	}
+
 }

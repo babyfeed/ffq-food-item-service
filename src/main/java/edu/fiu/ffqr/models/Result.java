@@ -47,6 +47,9 @@ public class Result {
 	@JsonProperty("dailyAverages")
 	Map<String, Double> dailyAverages = new HashMap<String, Double>();
 
+	@JsonProperty("active")
+	private boolean active = true;
+
 	public Result(String questionnaireId, String userId, String userType, String date, int ageInMonths, ArrayList<FoodItemInput> userChoices, 
 					Map<String, Double> weeklyTotals, Map<String, Double> dailyAverages, String feedback, String gender, String patientName){
 		
@@ -153,9 +156,16 @@ public class Result {
 
 	public void setFeedback(String feedback) {
 		this.feedback = feedback;
+
 	}
 
 	public String getFeedback() {
 		return feedback;
+		
+	}
+	
+	public void delete(){
+		this.active = false;
+		
 	}
 }

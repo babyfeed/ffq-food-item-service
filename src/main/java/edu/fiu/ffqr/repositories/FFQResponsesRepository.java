@@ -9,14 +9,16 @@ import java.util.List;
 @Repository
 public interface FFQResponsesRepository extends MongoRepository<Result, String> {
 
-	Result findByQuestionnaireId(String questionnaireId);
+	Result findByQuestionnaireIdAndActiveIsTrue(String questionnaireId);
 
-	List<Result> findByUserId(String userId);
+	List<Result> findByUserIdAndActiveIsTrue(String userId);
 
-	List<Result> findByUserType(String userType);
+	List<Result> findByUserTypeAndActiveIsTrue(String userType);
 
     void delete(Result fi);
 
 	List<Result> deleteByUserId(String userId);
+
+	List<Result> findByActiveIsTrue();
  
 }
