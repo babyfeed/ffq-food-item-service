@@ -29,9 +29,6 @@ public class FoodItem implements Serializable {
   //Added by Teriq Douglas. A field for saving the position of the food item upon changing.
   @Field("itemPosition")
   private int itemPosition;
-  //Logical delete
-  @JsonProperty("active")
-  private boolean active = true;
   
   
   // Constructors
@@ -208,9 +205,4 @@ public class FoodItem implements Serializable {
   public void setItemPosition(int itemPosition) { this.itemPosition = itemPosition; }
 
   public int getItemPosition() { return itemPosition; }
-
-	public void delete(){
-		this.active = false;
-	}
-
 }
