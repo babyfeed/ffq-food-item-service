@@ -23,19 +23,19 @@ public class FFQFoodEntryService {
 	private FFQFoodEntryRepository foodRepository;
 	
 	public List<FoodItem> getAll()	{
-		return foodRepository.findAll();
+		return foodRepository.findByActiveIsTrue();
 	}
 	
 	public FoodItem getEntryWithName(String name) {
-		return foodRepository.findByName(name);
+		return foodRepository.findByNameAndActiveIsTrue(name);
 	}
 	
 	public FoodItem getFoodItemBy_id(ObjectId _id) {
-		return foodRepository.getFoodItemBy_id(_id);
+		return foodRepository.getFoodItemBy_idAndActiveIsTrue(_id);
 	}
 	
 	public FoodItem getEntryWithNutrientListID(String nutrientListID) {
-		return foodRepository.findByNutrientId(nutrientListID);
+		return foodRepository.findByNutrientIdAndActiveIsTrue(nutrientListID);
 	}
 	
 	public FoodItem create(FoodItem fi) {
@@ -63,13 +63,15 @@ public class FFQFoodEntryService {
 	 //}
 	
 	public void delete(String name) {
-		FoodItem fi = foodRepository.findByName(name);
-		foodRepository.delete(fi);
+		FoodItem fi = foodRepository.findByNameAndActiveIsTrue(name);
+		fi.delete();
+		foodRepository.save(fi);
 	}
 
 	public void deleteById(ObjectId id) {
-		FoodItem fi = foodRepository.getFoodItemBy_id(id);
-		foodRepository.delete(fi);
+		FoodItem fi = foodRepository.getFoodItemBy_idAndActiveIsTrue(id);
+		fi.delete();
+		foodRepository.save(fi);
 	}
 
 	public FoodItem update(FoodItem item) {
