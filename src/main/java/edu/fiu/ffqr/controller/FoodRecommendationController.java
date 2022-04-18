@@ -161,7 +161,7 @@ public class FoodRecommendationController {
                             exclusivelyBreastfed = false;
                             categoryValueMap.replace(categoryName, categoryValueMap.get(categoryName) + currentTotal);
                         } else if (nutrientListID.equalsIgnoreCase("brea")) {
-                            currentTotal = foodItem.getFrequency();
+                            currentTotal = foodItem.getFrequency() * 3;
                             if (foodItem.getFrequencyType().equalsIgnoreCase("Week")) {
                                 currentTotal /= 7;
                             }
@@ -236,16 +236,15 @@ public class FoodRecommendationController {
             // 2/20/2022 WENJIA update
             // SET breastMilkFlag
             // if the baby is taking breast milk, then the calculated amount should be the standard amount
-            if (breastMilkFlag && sysFoodItemRecommendation.getCategoryName().equalsIgnoreCase("Breastmilk/Formula/Cows Milk/Other milks")) {
+            // 4/18/2022 wenjia update
+            // add new logic: if a baby is having formula more than the maximum of standdard, ex. 6 month baby is having formula > 28.9
+            // then the total number of milk = formula + breastmilk +
+
+            if (breastMilkFlag && sysFoodItemRecommendation.getCategoryName().equalsIgnoreCase("Breastmilk/Formula/Cows Milk/Other milks") && (calculatedAmount < setCalculatedAmountForBreastMilk(infantAge))) {
                 foodItemRec.setCalculatedAmount(setCalculatedAmountForBreastMilk(infantAge));
             } else {
                 foodItemRec.setCalculatedAmount(calculatedAmount);
             }
-            // setCalculatedAmount: set "Food Results" "Calculated Amount (Oz)"
-//            if (nutrientListID.equalsIgnoreCase("brea")) {
-////                foodItemRec.setCalculatedAmount(setCalculatedAmountForBreastMilk(infantAge));
-//                foodItemRec.setCalculatedAmount(27.0);
-//            }
             if (infantAge >= 0 && infantAge <= 5) {
                 ageRange = "0-5";
             } else if (infantAge >= 6 && infantAge <= 12) {
