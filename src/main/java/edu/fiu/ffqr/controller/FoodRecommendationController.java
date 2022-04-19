@@ -71,6 +71,7 @@ public class FoodRecommendationController {
         String ageRange = "";
         Double calculatedAmount = 0.0;
         boolean breastMilkFlag = false; // set breastMilkFlag, if baby is taking breast milk, true
+        Double formulaMilkAmount = 0.0;
         Map<String, Double> categoryValueMap = new HashMap<String, Double>();
         boolean exclusivelyBreastfed = true; //boolean for if baby is exclusively breastfed. if another fooditem is passed as having a value it will turn false
 
@@ -165,10 +166,10 @@ public class FoodRecommendationController {
                             if (foodItem.getFrequencyType().equalsIgnoreCase("Week")) {
                                 currentTotal /= 7;
                             }
+                            formulaMilkAmount = currentTotal; // temporarily save bresatmilk amount here
                             categoryValueMap.replace(categoryName, categoryValueMap.get(categoryName) + currentTotal);
                         } else {
                             currentTotal = foodItem.getFrequency();
-
                             if (foodItem.getFrequencyType().equalsIgnoreCase("Week")) {
                                 currentTotal = currentTotal / 7;
                             }
@@ -238,10 +239,11 @@ public class FoodRecommendationController {
             // if the baby is taking breast milk, then the calculated amount should be the standard amount
             // 4/18/2022 wenjia update
             // add new logic: if a baby is having formula more than the maximum of standdard, ex. 6 month baby is having formula > 28.9
-            // then the total number of milk = formula + breastmilk +
-
-            if (breastMilkFlag && sysFoodItemRecommendation.getCategoryName().equalsIgnoreCase("Breastmilk/Formula/Cows Milk/Other milks") && (calculatedAmount < setCalculatedAmountForBreastMilk(infantAge))) {
-                foodItemRec.setCalculatedAmount(setCalculatedAmountForBreastMilk(infantAge));
+            // then the total number of milk = formula + breastmilk + cow milk
+            double recommendAmount = setCalculatedAmountForBreastMilk(infantAge);
+            formulaMilkAmount = calculatedAmount - formulaMilkAmount;
+            if (breastMilkFlag && sysFoodItemRecommendation.getCategoryName().equalsIgnoreCase("Breastmilk/Formula/Cows Milk/Other milks") && formulaMilkAmount <= recommendAmount) {
+                foodItemRec.setCalculatedAmount(recommendAmount);
             } else {
                 foodItemRec.setCalculatedAmount(calculatedAmount);
             }
@@ -257,24 +259,24 @@ public class FoodRecommendationController {
             List<FoodRecommendationRange> rangeList = sysFoodItemRecommendation.getRecommendationsByAge().get(ageRange);
 
             boolean notFound = true;
-            double compareValue = Math.floor(calculatedAmount * 10) / 10.0;
+            double compareValue = Math.floor(foodItemRec.getCalculatedAmount() * 10) / 10.0;
             //compareValue is used to account for the grey areas in the payload. it rounds down the calculated amount to 1 decimal place
             //so all food categories will get a proper label
             for (FoodRecommendationRange range : rangeList) {
                 if (compareValue >= range.getFrom() && compareValue <= range.getTo() && notFound) {
                     //if statement checks first to see if exclusively breastfed is true. if so, it will manually make the label 'adequate'
                     //since babies that are exclusively breastfed are always getting adequate milk according to the PO
-                    if (exclusivelyBreastfed && (sysFoodItemRecommendation.getCategoryName().equalsIgnoreCase("Breastmilk/Formula/Cows Milk/Other milks"))) {
-                        foodItemRec.setLabel("Adequate");
-                    } else {
-                        foodItemRec.setLabel(range.getLabel());
-                    }
+//                    if (exclusivelyBreastfed && (sysFoodItemRecommendation.getCategoryName().equalsIgnoreCase("Breastmilk/Formula/Cows Milk/Other milks"))) {
+//                        foodItemRec.setLabel("Adequate");
+//                    } else {
+//
+//                    }
+                    foodItemRec.setLabel(range.getLabel());
                     foodItemRec.setRangeFrom(range.getFrom());
                     foodItemRec.setRangeTo(range.getTo());
                     notFound = false;
                 }
             }
-
             foodItemRecommendation.getFoodCategoryRecList().add(foodItemRec);
         }
 
