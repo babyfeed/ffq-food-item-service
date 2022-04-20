@@ -72,6 +72,7 @@ public class FoodRecommendationController {
         Double calculatedAmount = 0.0;
         boolean breastMilkFlag = false; // set breastMilkFlag, if baby is taking breast milk, true
         Double formulaMilkAmount = 0.0;
+        boolean labelAdequate = false; // if the baby is having both breastmilk & formula but amount is still equal to recommmendation, then true
         Map<String, Double> categoryValueMap = new HashMap<String, Double>();
         boolean exclusivelyBreastfed = true; //boolean for if baby is exclusively breastfed. if another fooditem is passed as having a value it will turn false
 
@@ -244,6 +245,7 @@ public class FoodRecommendationController {
             formulaMilkAmount = calculatedAmount - formulaMilkAmount;
             if (breastMilkFlag && sysFoodItemRecommendation.getCategoryName().equalsIgnoreCase("Breastmilk/Formula/Cows Milk/Other milks") && formulaMilkAmount <= recommendAmount) {
                 foodItemRec.setCalculatedAmount(recommendAmount);
+                labelAdequate = true;
             } else {
                 foodItemRec.setCalculatedAmount(calculatedAmount);
             }
@@ -266,12 +268,11 @@ public class FoodRecommendationController {
                 if (compareValue >= range.getFrom() && compareValue <= range.getTo() && notFound) {
                     //if statement checks first to see if exclusively breastfed is true. if so, it will manually make the label 'adequate'
                     //since babies that are exclusively breastfed are always getting adequate milk according to the PO
-//                    if (exclusivelyBreastfed && (sysFoodItemRecommendation.getCategoryName().equalsIgnoreCase("Breastmilk/Formula/Cows Milk/Other milks"))) {
-//                        foodItemRec.setLabel("Adequate");
-//                    } else {
-//
-//                    }
-                    foodItemRec.setLabel(range.getLabel());
+                    if (exclusivelyBreastfed && (sysFoodItemRecommendation.getCategoryName().equalsIgnoreCase("Breastmilk/Formula/Cows Milk/Other milks")) || labelAdequate) {
+                        foodItemRec.setLabel("Adequate");
+                    } else {
+                        foodItemRec.setLabel(range.getLabel());
+                    }
                     foodItemRec.setRangeFrom(range.getFrom());
                     foodItemRec.setRangeTo(range.getTo());
                     notFound = false;
