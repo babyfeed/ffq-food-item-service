@@ -112,7 +112,17 @@ public class FFQCalculator {
 
                     if (selectedFoodType.getNutrientListID().equalsIgnoreCase("brea"))
                     {
-                        additionalIntake = nutrientValuePerServing * breastMilkNeeded;
+                        if (breastMilkNeeded != 0){
+                            // when breastMilkNeeded !=0 & the baby is taking breastmilk, means the formula milk is not enough
+                            // so baby is getting nutrient from both breastmilk & formula
+                            additionalIntake = nutrientValuePerServing * breastMilkNeeded;
+                        } else {
+                            // when breastMilkNeeded = 0, it means formula milk is higher than recommendation
+                            // then according to prof palacios's requirement, the extra breaskmilk should be counted
+                            // per serving = 3 oz
+                            additionalIntake = 3 * foodItem.getFrequency() * 19.73;
+                        }
+
                     }
                     else
                     {
