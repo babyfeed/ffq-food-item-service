@@ -56,13 +56,12 @@ public class FFQCalculator {
         double dailyFormulaServing = 0.0;
 
         //for each food item that the user selected
-        for (FoodItemInput foodItem: userChoices) {
+        for (FoodItemInput foodItem : userChoices) {
 
             // Formula is calculated before breastmilk so we need to go through this first, if chosen.
-            if(foodItem.getNutrientListID().equalsIgnoreCase("form"))
-            {
+            if (foodItem.getNutrientListID().equalsIgnoreCase("form")) {
                 //get amount of servings for item
-                if(foodItem.getServing() == null || foodItem.getServing().isEmpty())
+                if (foodItem.getServing() == null || foodItem.getServing().isEmpty())
                     amountOfServings = 1;
                 else
                     amountOfServings = Double.parseDouble(foodItem.getServing().split(" ")[0]);
@@ -81,13 +80,13 @@ public class FFQCalculator {
         breastMilkNeeded = calculateFormulaAndBreastMilk(ageInMonths, dailyFormulaServing);
 
         //for each food item that the user selected
-        for (FoodItemInput foodItem: userChoices) {
+        for (FoodItemInput foodItem : userChoices) {
 
             //find record with that nutrientListID
             NutrientList selectedFoodType = nlService.getWithNutrientListID(foodItem.getNutrientListID());
 
             //get amount of servings for item
-            if(foodItem.getServing() == null || foodItem.getServing().isEmpty())
+            if (foodItem.getServing() == null || foodItem.getServing().isEmpty())
                 amountOfServings = 1;
             else
                 amountOfServings = Double.parseDouble(foodItem.getServing().split(" ")[0]);
@@ -110,12 +109,14 @@ public class FFQCalculator {
                     //additional intake = amount of servings * value of nutrient per serving
                     double nutrientValuePerServing = selectedFoodType.getNutrient(nutrients[i]);
 
-                    if (selectedFoodType.getNutrientListID().equalsIgnoreCase("brea"))
-                    {
-                        if (breastMilkNeeded != 0){
+                    if (selectedFoodType.getNutrientListID().equalsIgnoreCase("brea")) {
+                        if (breastMilkNeeded != 0) {
                             // when breastMilkNeeded !=0 & the baby is taking breastmilk, means the formula milk is not enough
                             // so baby is getting nutrient from both breastmilk & formula
                             additionalIntake = nutrientValuePerServing * breastMilkNeeded;
+                            if (nutrients[i].equalsIgnoreCase("Energy (kcal)")) {
+                                additionalIntake = 19.8446 * (breastMilkNeeded / ouncesToMilliliter);
+                            }
                         } else {
                             // when breastMilkNeeded = 0, it means formula milk is higher than recommendation
                             // then according to prof palacios's requirement, the extra breaskmilk should be counted
@@ -123,9 +124,7 @@ public class FFQCalculator {
                             additionalIntake = 3 * foodItem.getFrequency() * 19.8446;
                         }
 
-                    }
-                    else
-                    {
+                    } else {
                         additionalIntake = amountOfServings * foodItem.getFrequency() * nutrientValuePerServing;
                     }
 
@@ -154,18 +153,14 @@ public class FFQCalculator {
                     //additional intake = amount of servings * value of nutrient per serving
                     double nutrientValuePerServing = selectedFoodType.getNutrient(nutrients[i]);
 
-                    if (selectedFoodType.getNutrientListID().equalsIgnoreCase("brea"))
-                    {
+                    if (selectedFoodType.getNutrientListID().equalsIgnoreCase("brea")) {
                         additionalIntake = nutrientValuePerServing * breastMilkNeeded;
                         // PO said that breastmilk calculations must be minimum 1 serving per day.
                         // This means that we should have 7 or more servings when choosing weekly intake.
-                        if(foodItem.getFrequency() < 7)
-                        {
+                        if (foodItem.getFrequency() < 7) {
                             additionalIntake = 0.0;
                         }
-                    }
-                    else
-                    {
+                    } else {
                         additionalIntake = amountOfServings * foodItem.getFrequency() * nutrientValuePerServing;
                         additionalIntake /= 7.00;
                     }
@@ -175,9 +170,7 @@ public class FFQCalculator {
                     dailyAverages.put(nutrients[i], finalDailyValue);
                     weeklyTotals.put(nutrients[i], finalDailyValue * 7.00);
                 }
-            }
-            else
-            {
+            } else {
                 throw new IllegalArgumentException("Frequency type must be day or week");
             }
         }
@@ -216,8 +209,8 @@ public class FFQCalculator {
         Map<String, Double> modDailyAverages = new HashMap<String, Double>();
         Map<String, Double> modWeeklyTotals = new HashMap<String, Double>();
 
-        for (String key: modifiedWeeklyTotals.keySet()) {
-            if(QuestionnaireResultNutrientsList.getNutrientList().contains(key)){
+        for (String key : modifiedWeeklyTotals.keySet()) {
+            if (QuestionnaireResultNutrientsList.getNutrientList().contains(key)) {
                 modDailyAverages.put(key, modifiedDailyAverages.get(key));
                 modWeeklyTotals.put(key, modifiedWeeklyTotals.get(key));
             }
@@ -232,26 +225,24 @@ public class FFQCalculator {
     //Khalid Alamoudi - Added functions to create modified version of any map into the required 3 digit max criteria
     // set by the PO
     //================================================================================
-    public static Map<String, Double> modifiedMap(Map<String, Double> mapInput){
+    public static Map<String, Double> modifiedMap(Map<String, Double> mapInput) {
 
         Map<String, Double> newMap = new HashMap<>();
-        for(String key: mapInput.keySet()){
+        for (String key : mapInput.keySet()) {
             double value = mapInput.get(key);
             newMap.put(key, threeDigitView(value));
         }
         return newMap;
     }
 
-    public static double threeDigitView(double value){
+    public static double threeDigitView(double value) {
         double newValue = value;
-        if(value >= 100){
-            newValue = (double)((int)value);
-        }
-        else if((value >= 10)&&(value < 100)){
-            newValue = ((double)((int)(value*10)))/10.0;
-        }
-        else{
-            newValue = ((double)((int)(value*100)))/100.0;
+        if (value >= 100) {
+            newValue = (double) ((int) value);
+        } else if ((value >= 10) && (value < 100)) {
+            newValue = ((double) ((int) (value * 10))) / 10.0;
+        } else {
+            newValue = ((double) ((int) (value * 100))) / 100.0;
         }
         return newValue;
     }
@@ -269,66 +260,39 @@ public class FFQCalculator {
     @param amountOfServings: the calculated amount of formula passed into the method.
     @return Returns the positive amount of breastmilk still required, 0 otherwise.
     */
-    private static double calculateFormulaAndBreastMilk(int ageInMonths, double amountOfServings)
-    {
+    private static double calculateFormulaAndBreastMilk(int ageInMonths, double amountOfServings) {
         double servingsInMilliliters = amountOfServings * ouncesToMilliliter;
         double remainingMilliters = 0.0;
 
-        if(ageInMonths == 1)
-        {
+        if (ageInMonths == 1) {
             remainingMilliters = oneMonthInfantBreastMilkVolume - servingsInMilliliters;
-        }
-        else if(ageInMonths == 2)
-        {
+        } else if (ageInMonths == 2) {
             remainingMilliters = twoMonthInfantBreastMilkVolume - servingsInMilliliters;
-        }
-        else if(ageInMonths == 3)
-        {
+        } else if (ageInMonths == 3) {
             remainingMilliters = threeMonthInfantBreastMilkVolume - servingsInMilliliters;
-        }
-        else if(ageInMonths == 4)
-        {
+        } else if (ageInMonths == 4) {
             remainingMilliters = fourMonthInfantBreastMilkVolume - servingsInMilliliters;
-        }
-        else if(ageInMonths == 5)
-        {
+        } else if (ageInMonths == 5) {
             remainingMilliters = fiveMonthInfantBreastMilkVolume - servingsInMilliliters;
-        }
-        else if(ageInMonths == 6)
-        {
+        } else if (ageInMonths == 6) {
             remainingMilliters = sixMonthInfantBreastMilkVolume - servingsInMilliliters;
-        }
-        else if(ageInMonths == 7)
-        {
+        } else if (ageInMonths == 7) {
             remainingMilliters = sevenMonthInfantBreastMilkVolume - servingsInMilliliters;
-        }
-        else if(ageInMonths == 8)
-        {
+        } else if (ageInMonths == 8) {
             remainingMilliters = eightMonthInfantBreastMilkVolume - servingsInMilliliters;
-        }
-        else if(ageInMonths == 9)
-        {
+        } else if (ageInMonths == 9) {
             remainingMilliters = nineMonthInfantBreastMilkVolume - servingsInMilliliters;
-        }
-        else if(ageInMonths == 10)
-        {
+        } else if (ageInMonths == 10) {
             remainingMilliters = tenMonthInfantBreastMilkVolume - servingsInMilliliters;
-        }
-        else if(ageInMonths == 11)
-        {
+        } else if (ageInMonths == 11) {
             remainingMilliters = elevenMonthInfantBreastMilkVolume - servingsInMilliliters;
-        }
-        else if(ageInMonths == 12)
-        {
+        } else if (ageInMonths == 12) {
             remainingMilliters = twelveMonthInfantBreastMilkVolume - servingsInMilliliters;
-        }
-        else if(ageInMonths >= 13 && ageInMonths <= 24)
-        {
+        } else if (ageInMonths >= 13 && ageInMonths <= 24) {
             remainingMilliters = thirteenThroughTwentyFourMonthInfantBreastMilkVolume - servingsInMilliliters;
         }
 
-        if(remainingMilliters > 0)
-        {
+        if (remainingMilliters > 0) {
             return remainingMilliters;
         }
 
