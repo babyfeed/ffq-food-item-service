@@ -27,40 +27,37 @@ public class FoodDescriptionController {
     @Autowired
     private FFQFoodDescriptionService foodDescriptionService;
 
-    public FoodDescriptionController() {}
+    public FoodDescriptionController() {
+    }
 
     @GetMapping("/all")
-    public List<FoodDescription> getAllFoodDescriptions() throws JsonProcessingException
-    {
+    public List<FoodDescription> getAllFoodDescriptions() throws JsonProcessingException {
         return foodDescriptionService.getAll();
     }
 
     @GetMapping("/{foodItemGroupName}")
-    public FoodDescription collectionByFoodItemGroupName(@PathVariable("foodItemGroupName") String foodItemGroupName)
-    {
+    public FoodDescription collectionByFoodItemGroupName(@PathVariable("foodItemGroupName") String foodItemGroupName) {
         return foodDescriptionService.findByFoodItemGroupName(foodItemGroupName);
     }
 
     @PostMapping("/create")
-	public FoodDescription createFoodDescription(@RequestBody FoodDescription foodDescription) throws JsonProcessingException {
-		
-		if(foodDescriptionService.findByFoodItemGroupName(foodDescription.getFoodItemGroupName()) != null)
-		{
-			throw new IllegalArgumentException("Food Item Description " + foodDescription.getFoodItemGroupName() + " already exists.");			
-		}
-		else
-			return foodDescriptionService.create(foodDescription);
+    public FoodDescription createFoodDescription(@RequestBody FoodDescription foodDescription) throws JsonProcessingException {
+
+        if (foodDescriptionService.findByFoodItemGroupName(foodDescription.getFoodItemGroupName()) != null) {
+            throw new IllegalArgumentException("Food Item Description " + foodDescription.getFoodItemGroupName() + " already exists.");
+        } else
+            return foodDescriptionService.create(foodDescription);
     }
 
     @PutMapping("/update/{id}")
-	public FoodDescription updateFoodDescription(@PathVariable ObjectId id, @RequestBody FoodDescription data) throws JsonProcessingException {
-		
+    public FoodDescription updateFoodDescription(@PathVariable ObjectId id, @RequestBody FoodDescription data) throws JsonProcessingException {
+
         FoodDescription fdItem = foodDescriptionService.findById(id);
 
         if (null == fdItem) {
             throw new IllegalArgumentException("The food description id does not exist");
         }
-	
+
         if (data.getImageUrl() != null) {
             fdItem.setImageUrl(data.getImageUrl());
         }

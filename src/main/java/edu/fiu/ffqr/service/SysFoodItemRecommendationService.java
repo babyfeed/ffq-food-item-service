@@ -13,18 +13,18 @@ import edu.fiu.ffqr.repositories.SysFoodRecommendationRepository;
 @Component
 public class SysFoodItemRecommendationService {
 
-	@Autowired
-	private SysFoodRecommendationRepository sysFoodItemRecomRepository;
-	
-	public List<SysFoodRecommendation> getAll()	{
-		return sysFoodItemRecomRepository.findAll();
-	}
-	
-	public SysFoodRecommendation getSysNutrientRecommendationByNutrientName(String categoryName) {
-		return sysFoodItemRecomRepository.findBycategoryName(categoryName);
-	}
-	
-	public SysFoodRecommendation create(SysFoodRecommendation fi) {
-		return sysFoodItemRecomRepository.save(fi);
-	}
+    @Autowired
+    private SysFoodRecommendationRepository sysFoodItemRecomRepository;
+
+    public List<SysFoodRecommendation> getAll() {
+        return sysFoodItemRecomRepository.findAll();
+    }
+
+    public SysFoodRecommendation getSysNutrientRecommendationByNutrientName(String categoryName) {
+        return sysFoodItemRecomRepository.findBycategoryName(categoryName);
+    }
+
+    public SysFoodRecommendation create(SysFoodRecommendation fi) {
+        return sysFoodItemRecomRepository.save(fi);
+    }
 }

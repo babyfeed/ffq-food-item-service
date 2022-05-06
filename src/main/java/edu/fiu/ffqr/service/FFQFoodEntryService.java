@@ -19,62 +19,62 @@ import edu.fiu.ffqr.repositories.FFQFoodEntryRepository;;
 @Component
 public class FFQFoodEntryService {
 
-	@Autowired
-	private FFQFoodEntryRepository foodRepository;
-	
-	public List<FoodItem> getAll()	{
-		return foodRepository.findByActiveIsTrue();
-	}
-	
-	public FoodItem getEntryWithName(String name) {
-		return foodRepository.findByNameAndActiveIsTrue(name);
-	}
-	
-	public FoodItem getFoodItemBy_id(ObjectId _id) {
-		return foodRepository.getFoodItemBy_idAndActiveIsTrue(_id);
-	}
-	
-	public FoodItem getEntryWithNutrientListID(String nutrientListID) {
-		return foodRepository.findByNutrientIdAndActiveIsTrue(nutrientListID);
-	}
-	
-	public FoodItem create(FoodItem fi) {
-		return foodRepository.save(fi);
-	}
-	
-	//public FoodItem create(String name, ArrayList<FoodType> foodTypes) { 
-		// FoodItem fi = new FoodItem(name, foodTypes);
-		// return foodRepository.save(fi); 
-	 //}
-	
-	//public FoodItem create(String name, ArrayList<ServingOptions> servings, ArrayList<FoodType> foodTypes) { 
-		 //FoodItem fi = new FoodItem(name, servings, foodTypes);
-		 //return foodRepository.save(fi); 
-	 //}
-	
-	//public FoodItem create(String name, ArrayList<ServingOptions> servings, ArrayList<FoodType> foodTypes, SugarSetting additionalSugar) { 
-		 //FoodItem fi = new FoodItem(name, servings, foodTypes, additionalSugar);
-		 //return foodRepository.save(fi); 
-	 //}
-	
-	//public FoodItem create(String name, ArrayList<FoodType> foodTypes, SugarSetting additionalSugar) { 
-		 //FoodItem fi = new FoodItem(name, foodTypes, additionalSugar);
-		 //return foodRepository.save(fi); 
-	 //}
-	
-	public void delete(String name) {
-		FoodItem fi = foodRepository.findByNameAndActiveIsTrue(name);
-		fi.delete();
-		foodRepository.save(fi);
-	}
+    @Autowired
+    private FFQFoodEntryRepository foodRepository;
 
-	public void deleteById(ObjectId id) {
-		FoodItem fi = foodRepository.getFoodItemBy_idAndActiveIsTrue(id);
-		fi.delete();
-		foodRepository.save(fi);
-	}
+    public List<FoodItem> getAll() {
+        return foodRepository.findByActiveIsTrue();
+    }
 
-	public FoodItem update(FoodItem item) {
-		return foodRepository.save(item);
-	}
+    public FoodItem getEntryWithName(String name) {
+        return foodRepository.findByNameAndActiveIsTrue(name);
+    }
+
+    public FoodItem getFoodItemBy_id(ObjectId _id) {
+        return foodRepository.getFoodItemBy_idAndActiveIsTrue(_id);
+    }
+
+    public FoodItem getEntryWithNutrientListID(String nutrientListID) {
+        return foodRepository.findByNutrientIdAndActiveIsTrue(nutrientListID);
+    }
+
+    public FoodItem create(FoodItem fi) {
+        return foodRepository.save(fi);
+    }
+
+    //public FoodItem create(String name, ArrayList<FoodType> foodTypes) {
+    // FoodItem fi = new FoodItem(name, foodTypes);
+    // return foodRepository.save(fi);
+    //}
+
+    //public FoodItem create(String name, ArrayList<ServingOptions> servings, ArrayList<FoodType> foodTypes) {
+    //FoodItem fi = new FoodItem(name, servings, foodTypes);
+    //return foodRepository.save(fi);
+    //}
+
+    //public FoodItem create(String name, ArrayList<ServingOptions> servings, ArrayList<FoodType> foodTypes, SugarSetting additionalSugar) {
+    //FoodItem fi = new FoodItem(name, servings, foodTypes, additionalSugar);
+    //return foodRepository.save(fi);
+    //}
+
+    //public FoodItem create(String name, ArrayList<FoodType> foodTypes, SugarSetting additionalSugar) {
+    //FoodItem fi = new FoodItem(name, foodTypes, additionalSugar);
+    //return foodRepository.save(fi);
+    //}
+
+    public void delete(String name) {
+        FoodItem fi = foodRepository.findByNameAndActiveIsTrue(name);
+        fi.delete();
+        foodRepository.save(fi);
+    }
+
+    public void deleteById(ObjectId id) {
+        FoodItem fi = foodRepository.getFoodItemBy_idAndActiveIsTrue(id);
+        fi.delete();
+        foodRepository.save(fi);
+    }
+
+    public FoodItem update(FoodItem item) {
+        return foodRepository.save(item);
+    }
 }
