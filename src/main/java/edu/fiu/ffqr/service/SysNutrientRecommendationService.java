@@ -13,20 +13,20 @@ import edu.fiu.ffqr.repositories.SysNutRecommendationRepository;
 @Component
 public class SysNutrientRecommendationService {
 
-	@Autowired
-	private SysNutRecommendationRepository sysNutRecomRepository;
-	
-	public List<SysNutrientRecommendation> getAll()	{
-		return sysNutRecomRepository.findAll();
-	}
-	
-	public SysNutrientRecommendation getSysNutrientRecommendationByNutrientName(String name) {
-		return sysNutRecomRepository.findBynutrientName(name);
-	}
-	
-	public SysNutrientRecommendation create(SysNutrientRecommendation fi) {
-		return sysNutRecomRepository.save(fi);
-	}
-	
-	
+    @Autowired
+    private SysNutRecommendationRepository sysNutRecomRepository;
+
+    public List<SysNutrientRecommendation> getAll() {
+        return sysNutRecomRepository.findAll();
+    }
+
+    public SysNutrientRecommendation getSysNutrientRecommendationByNutrientName(String name) {
+        return sysNutRecomRepository.findBynutrientName(name);
+    }
+
+    public SysNutrientRecommendation create(SysNutrientRecommendation fi) {
+        return sysNutRecomRepository.save(fi);
+    }
+
+
 }
