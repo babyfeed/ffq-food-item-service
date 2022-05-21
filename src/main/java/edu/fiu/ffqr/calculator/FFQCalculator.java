@@ -59,7 +59,9 @@ public class FFQCalculator {
         for (FoodItemInput foodItem : userChoices) {
 
             // Formula is calculated before breastmilk so we need to go through this first, if chosen.
-            if (foodItem.getNutrientListID().equalsIgnoreCase("form")) {
+            // 5/21/2022 Prof and Jennifer want cowMilk, chocolate milk, otherMilk all in same logic with formula milk
+            if (foodItem.getNutrientListID().equalsIgnoreCase("form") || foodItem.getNutrientListID().equalsIgnoreCase("milkcow") ||
+                    foodItem.getNutrientListID().equalsIgnoreCase("milkchoc") || foodItem.getNutrientListID().equalsIgnoreCase("milkothe")) {
                 //get amount of servings for item
                 if (foodItem.getServing() == null || foodItem.getServing().isEmpty())
                     amountOfServings = 1;
