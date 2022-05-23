@@ -54,6 +54,7 @@ public class FFQCalculator {
         double amountOfServings = 0.0;
         double breastMilkNeeded = 0.0;
         double dailyFormulaServing = 0.0;
+        double dailyAllMilkServing = 0.0; // add up all the other milks, except breastmilk
 
         //for each food item that the user selected
         for (FoodItemInput foodItem : userChoices) {
@@ -73,13 +74,12 @@ public class FFQCalculator {
                 if (foodItem.getFrequencyType().equalsIgnoreCase("week")) {
                     dailyFormulaServing /= 7.0;
                 }
-
-                break;
+                dailyAllMilkServing += dailyFormulaServing;
             }
         }
 
         // breastMilkNeeded will always calculate the amount of breastmilk that is needed based on FFQ input.
-        breastMilkNeeded = calculateFormulaAndBreastMilk(ageInMonths, dailyFormulaServing);
+        breastMilkNeeded = calculateFormulaAndBreastMilk(ageInMonths, dailyAllMilkServing);
 
         //for each food item that the user selected
         for (FoodItemInput foodItem : userChoices) {
