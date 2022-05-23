@@ -296,10 +296,8 @@ public class FFQCalculator {
 
         if (remainingMilliters > 0) {
             return remainingMilliters;
-        } else if (remainingMilliters === 0) {
-            return 0.0
-        } else {
-            return -1.0
         }
+
+        return 0.0;
     }
 }
