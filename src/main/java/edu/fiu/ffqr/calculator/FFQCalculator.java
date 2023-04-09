@@ -54,15 +54,12 @@ public class FFQCalculator {
         double amountOfServings = 0.0;
         double breastMilkNeeded = 0.0;
         double dailyFormulaServing = 0.0;
-        double dailyAllMilkServing = 0.0; // add up all the other milks, except breastmilk
 
         //for each food item that the user selected
         for (FoodItemInput foodItem : userChoices) {
 
             // Formula is calculated before breastmilk so we need to go through this first, if chosen.
-            // 5/21/2022 Prof and Jennifer want cowMilk, chocolate milk, otherMilk all in same logic with formula milk
-            if (foodItem.getNutrientListID().equalsIgnoreCase("form") || foodItem.getNutrientListID().equalsIgnoreCase("milkcow") ||
-                    foodItem.getNutrientListID().equalsIgnoreCase("milkchoc") || foodItem.getNutrientListID().equalsIgnoreCase("milkothe")) {
+            if (foodItem.getNutrientListID().equalsIgnoreCase("form")) {
                 //get amount of servings for item
                 if (foodItem.getServing() == null || foodItem.getServing().isEmpty())
                     amountOfServings = 1;
@@ -74,12 +71,13 @@ public class FFQCalculator {
                 if (foodItem.getFrequencyType().equalsIgnoreCase("week")) {
                     dailyFormulaServing /= 7.0;
                 }
-                dailyAllMilkServing += dailyFormulaServing;
+
+                break;
             }
         }
 
         // breastMilkNeeded will always calculate the amount of breastmilk that is needed based on FFQ input.
-        breastMilkNeeded = calculateFormulaAndBreastMilk(ageInMonths, dailyAllMilkServing);
+        breastMilkNeeded = calculateFormulaAndBreastMilk(ageInMonths, dailyFormulaServing);
 
         //for each food item that the user selected
         for (FoodItemInput foodItem : userChoices) {
