@@ -280,24 +280,34 @@ public class FoodRecommendationController {
             }
             foodItemRecommendation.getFoodCategoryRecList().add(foodItemRec);
         }
-
         return foodItemRecommendation;
     }
 
     public static double setCalculatedAmountForBreastMilk(int babyAgeInMonth) {
-        double oneMonthInfantBreastMilkVolume = 23.6;
-        double twoMonthInfantBreastMilkVolume = 24.7;
-        double threeMonthInfantBreastMilkVolume = 25.4;
-        double fourMonthInfantBreastMilkVolume = 26.4;
-        double fiveMonthInfantBreastMilkVolume = 26.9;
-        double sixMonthInfantBreastMilkVolume = 28.9;
-        double sevenMonthInfantBreastMilkVolume = 29.3;
-        double eightMonthInfantBreastMilkVolume = 27.6;
-        double nineMonthInfantBreastMilkVolume = 30.1;
-        double tenMonthInfantBreastMilkVolume = 30.4;
-        double elevenMonthInfantBreastMilkVolume = 30.8;
-        double twelveMonthInfantBreastMilkVolume = 30.4;
-        double thirteenThroughTwentyFourMonthInfantBreastMilkVolume = 16.9;
+        double oneMonthInfantBreastMilkVolume = 21.1;
+        double twoMonthInfantBreastMilkVolume = 23.8;
+        double threeMonthInfantBreastMilkVolume = 24.9;
+        double fourMonthInfantBreastMilkVolume = 25.1;
+        double fiveMonthInfantBreastMilkVolume = 25.9;
+        double sixMonthInfantBreastMilkVolume = 24.7;
+        double sevenMonthInfantBreastMilkVolume = 24.1;
+        double eightMonthInfantBreastMilkVolume = 23.5;
+        double nineMonthInfantBreastMilkVolume = 22.7;
+        double tenMonthInfantBreastMilkVolume = 21.9;
+        double elevenMonthInfantBreastMilkVolume = 21.0;
+        double twelveMonthInfantBreastMilkVolume = 20.1;
+        double thirteenMonthInfantBreastMilkVolume = 19.0;
+        double fourteenMonthInfantBreastMilkVolume = 18.0;
+        double fifteenMonthInfantBreastMilkVolume = 17.0;
+        double sixteenMonthInfantBreastMilkVolume = 15.9;
+        double seveteenMonthInfantBreastMilkVolume = 14.8;
+        double eighteenMonthInfantBreastMilkVolume = 13.7;
+        double nineteenMonthInfantBreastMilkVolume = 12.5;
+        double twentyMonthInfantBreastMilkVolume = 11.4;
+        double twentyoneMonthInfantBreastMilkVolume = 10.2;
+        double twentytwoMonthInfantBreastMilkVolume = 9.0;
+        double twentythreeMonthInfantBreastMilkVolume = 7.8;
+        double twentyfourMonthInfantBreastMilkVolume = 6.6;
 //		static final double ouncesToMilliliter = 29.5735;
         double finalAmount = 0.0;
         switch (babyAgeInMonth) {
@@ -337,9 +347,43 @@ public class FoodRecommendationController {
             case 12:
                 finalAmount = twelveMonthInfantBreastMilkVolume;
                 break;
+            case 13:
+                finalAmount = thirteenMonthInfantBreastMilkVolume;
+                break;
+            case 14:
+                finalAmount = fourteenMonthInfantBreastMilkVolume;
+                break;
+            case 15:
+                finalAmount = fifteenMonthInfantBreastMilkVolume;
+                break;
+            case 16:
+                finalAmount = sixteenMonthInfantBreastMilkVolume;
+                break;
+            case 17:
+                finalAmount = seveteenMonthInfantBreastMilkVolume;
+                break;
+            case 18:
+                finalAmount = eighteenMonthInfantBreastMilkVolume;
+                break;
+            case 19:
+                finalAmount = nineteenMonthInfantBreastMilkVolume;
+                break;
+            case 20:
+                finalAmount = twentyMonthInfantBreastMilkVolume;
+                break;
+            case 21:
+                finalAmount = twentyoneMonthInfantBreastMilkVolume;
+                break;
+            case 22:
+                finalAmount = twentytwoMonthInfantBreastMilkVolume;
+                break;
+            case 23:
+                finalAmount = twentythreeMonthInfantBreastMilkVolume;
+                break;
             default:
-                finalAmount = thirteenThroughTwentyFourMonthInfantBreastMilkVolume;
+                finalAmount = twentyfourMonthInfantBreastMilkVolume;
         }
         return finalAmount;
     }
+
 }

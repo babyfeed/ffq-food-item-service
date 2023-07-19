@@ -15,19 +15,31 @@ public class FFQCalculator {
 
     // Recommended Volume of milk for infants of differing age in months
     // (exclusively in ml or grams)
-    static double oneMonthInfantBreastMilkVolume = 699.0;
-    static double twoMonthInfantBreastMilkVolume = 731.0;
-    static double threeMonthInfantBreastMilkVolume = 751.0;
-    static double fourMonthInfantBreastMilkVolume = 780.0;
-    static double fiveMonthInfantBreastMilkVolume = 796.0;
-    static double sixMonthInfantBreastMilkVolume = 854.0;
-    static double sevenMonthInfantBreastMilkVolume = 867.0;
-    static double eightMonthInfantBreastMilkVolume = 815.0;
-    static double nineMonthInfantBreastMilkVolume = 890.0;
-    static double tenMonthInfantBreastMilkVolume = 900.0;
-    static double elevenMonthInfantBreastMilkVolume = 910.0;
-    static double twelveMonthInfantBreastMilkVolume = 900.0;
-    static double thirteenThroughTwentyFourMonthInfantBreastMilkVolume = 500.0;
+    static double oneMonthInfantBreastMilkVolume = 624.0;
+    static double twoMonthInfantBreastMilkVolume = 705.0;
+    static double threeMonthInfantBreastMilkVolume = 735.0;
+    static double fourMonthInfantBreastMilkVolume = 743.0;
+    static double fiveMonthInfantBreastMilkVolume = 740.0;
+    static double sixMonthInfantBreastMilkVolume = 729.0;
+    static double sevenMonthInfantBreastMilkVolume = 713.0;
+    static double eightMonthInfantBreastMilkVolume = 694.0;
+    static double nineMonthInfantBreastMilkVolume = 671.0;
+    static double tenMonthInfantBreastMilkVolume = 647.0;
+    static double elevenMonthInfantBreastMilkVolume = 620.0;
+    static double twelveMonthInfantBreastMilkVolume = 593.0;
+    static double thirteenMonthInfantBreastMilkVolume = 563.0;
+    static double fourteenMonthInfantBreastMilkVolume = 533.0;
+    static double fifteenMonthInfantBreastMilkVolume = 502.0;
+    static double sixteenMonthInfantBreastMilkVolume = 470.0;
+    static double seveteenMonthInfantBreastMilkVolume = 438.0;
+    static double eighteenMonthInfantBreastMilkVolume = 404.0;
+    static double nineteenMonthInfantBreastMilkVolume = 370.0;
+    static double twentyMonthInfantBreastMilkVolume = 336.0;
+    static double twentyoneMonthInfantBreastMilkVolume = 301.0;
+    static double twentytwoMonthInfantBreastMilkVolume = 266.0;
+    static double twentythreeMonthInfantBreastMilkVolume = 231.0;
+    static double twentyfourMonthInfantBreastMilkVolume = 195.0;
+
     static final double ouncesToMilliliter = 29.5735;
 
     //Khalid Alamoudi - Added total calories to the parameters and return
@@ -288,8 +300,30 @@ public class FFQCalculator {
             remainingMilliters = elevenMonthInfantBreastMilkVolume - servingsInMilliliters;
         } else if (ageInMonths == 12) {
             remainingMilliters = twelveMonthInfantBreastMilkVolume - servingsInMilliliters;
-        } else if (ageInMonths >= 13 && ageInMonths <= 24) {
-            remainingMilliters = thirteenThroughTwentyFourMonthInfantBreastMilkVolume - servingsInMilliliters;
+        } else if (ageInMonths == 13) {
+            remainingMilliters = thirteenMonthInfantBreastMilkVolume - servingsInMilliliters;
+        } else if (ageInMonths == 14) {
+            remainingMilliters = fourteenMonthInfantBreastMilkVolume - servingsInMilliliters;
+        } else if (ageInMonths == 15) {
+            remainingMilliters = fifteenMonthInfantBreastMilkVolume - servingsInMilliliters;
+        } else if (ageInMonths == 16) {
+            remainingMilliters = sixteenMonthInfantBreastMilkVolume - servingsInMilliliters;
+        } else if (ageInMonths == 17) {
+            remainingMilliters = seveteenMonthInfantBreastMilkVolume - servingsInMilliliters;
+        } else if (ageInMonths == 18) {
+            remainingMilliters = eighteenMonthInfantBreastMilkVolume - servingsInMilliliters;
+        } else if (ageInMonths == 19) {
+            remainingMilliters = nineteenMonthInfantBreastMilkVolume - servingsInMilliliters;
+        } else if (ageInMonths == 20) {
+            remainingMilliters = twentyMonthInfantBreastMilkVolume - servingsInMilliliters;
+        } else if (ageInMonths == 21) {
+            remainingMilliters = twentyoneMonthInfantBreastMilkVolume - servingsInMilliliters;
+        } else if (ageInMonths == 22) {
+            remainingMilliters = twentytwoMonthInfantBreastMilkVolume - servingsInMilliliters;
+        } else if (ageInMonths == 23) {
+            remainingMilliters = twentythreeMonthInfantBreastMilkVolume - servingsInMilliliters;
+        } else if (ageInMonths == 24) {
+            remainingMilliters = twentyfourMonthInfantBreastMilkVolume - servingsInMilliliters;
         }
 
         if (remainingMilliters > 0) {
