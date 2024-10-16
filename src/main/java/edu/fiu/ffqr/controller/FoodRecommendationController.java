@@ -155,7 +155,7 @@ public class FoodRecommendationController {
                             categoryValueMap.replace(categoryName, categoryValueMap.get(categoryName) + currentTotal);
                         } else if (nutrientListID.equalsIgnoreCase("icec")) {
 
-                            currentTotal = (29.5 * foodItem.getFrequency() * Double.parseDouble(foodItem.getServing().split(" ")[0]) / 28.35); // 1 ice cream serving = 29.5 grams, defined by PO
+                            currentTotal = (29.5 * foodItem.getFrequency() * parseServingAmount(foodItem.getServing()) / 28.35); // 1 ice cream serving = 29.5 grams, defined by PO
 
                             if (foodItem.getFrequencyType().equalsIgnoreCase("Week")) {
                                 currentTotal = currentTotal / 7;
@@ -180,7 +180,7 @@ public class FoodRecommendationController {
                     } else {
                         if (nutrientListID.equalsIgnoreCase("pancrefi")) {
 
-                            currentTotal = (45.8 * foodItem.getFrequency() * Double.parseDouble(foodItem.getServing().split(" ")[0]) / 28.35); // 1 refined pancake = 45.8 grams, defined by PO
+                            currentTotal = (45.8 * foodItem.getFrequency() * parseServingAmount(foodItem.getServing()) / 28.35); // 1 refined pancake = 45.8 grams, defined by PO
 
                             if (foodItem.getFrequencyType().equalsIgnoreCase("Week")) {
                                 currentTotal = currentTotal / 7;
@@ -190,7 +190,7 @@ public class FoodRecommendationController {
                             categoryValueMap.replace(categoryName, categoryValueMap.get(categoryName) + currentTotal);
                         } else if (nutrientListID.equalsIgnoreCase("pancwhol")) {
 
-                            currentTotal = (49.7 * foodItem.getFrequency() * Double.parseDouble(foodItem.getServing().split(" ")[0]) / 28.35); // 1 whole pancake = 49.7 grams, defined by PO
+                            currentTotal = (49.7 * foodItem.getFrequency() * parseServingAmount(foodItem.getServing()) / 28.35); // 1 whole pancake = 49.7 grams, defined by PO
 
                             if (foodItem.getFrequencyType().equalsIgnoreCase("Week")) {
                                 currentTotal = currentTotal / 7;
@@ -199,7 +199,7 @@ public class FoodRecommendationController {
                             categoryValueMap.replace(categoryName, categoryValueMap.get(categoryName) + currentTotal);
                         } else if (nutrientListID.equalsIgnoreCase("hone")) {
 
-                            currentTotal = (0.5 * foodItem.getFrequency() * Double.parseDouble(foodItem.getServing().split(" ")[0])); //
+                            currentTotal = (0.5 * foodItem.getFrequency() * parseServingAmount(foodItem.getServing())); //
 
                             if (foodItem.getFrequencyType().equalsIgnoreCase("Week")) {
                                 currentTotal = currentTotal / 7;
@@ -208,7 +208,7 @@ public class FoodRecommendationController {
                             categoryValueMap.replace(categoryName, categoryValueMap.get(categoryName) + currentTotal);
                         } else if (nutrientListID.equalsIgnoreCase("cook")) {
 
-                            currentTotal = (10.8 * foodItem.getFrequency() * Double.parseDouble(foodItem.getServing().split(" ")[0]) / 28.35); //
+                            currentTotal = (10.8 * foodItem.getFrequency() * parseServingAmount(foodItem.getServing()) / 28.35); //
 
                             if (foodItem.getFrequencyType().equalsIgnoreCase("Week")) {
                                 currentTotal = currentTotal / 7;
@@ -216,7 +216,7 @@ public class FoodRecommendationController {
                             exclusivelyBreastfed = false;
                             categoryValueMap.replace(categoryName, categoryValueMap.get(categoryName) + currentTotal);
                         } else {
-                            currentTotal = (foodItem.getFrequency() * Double.parseDouble(foodItem.getServing().split(" ")[0])); //
+                            currentTotal = (foodItem.getFrequency() * parseServingAmount(foodItem.getServing())); //
 
                             if (foodItem.getFrequencyType().equalsIgnoreCase("Week")) {
                                 currentTotal = currentTotal / 7;
@@ -281,6 +281,29 @@ public class FoodRecommendationController {
             foodItemRecommendation.getFoodCategoryRecList().add(foodItemRec);
         }
         return foodItemRecommendation;
+    }
+
+    private static double parseServingAmount(String serving) {
+        String[] parts = serving.split(" ");
+        String amountStr = parts[0];
+        
+        // Handle fractions
+        if (amountStr.contains("/")) {
+            String[] fractionParts = amountStr.split("/");
+            return Double.parseDouble(fractionParts[0]) / Double.parseDouble(fractionParts[1]);
+        }
+        
+        // Handle special characters
+        switch (amountStr) {
+            case "¼":
+                return 0.25;
+            case "½":
+                return 0.5;
+            case "¾":
+                return 0.75;
+            default:
+                return Double.parseDouble(amountStr);
+        }
     }
 
     public static double setCalculatedAmountForBreastMilk(int babyAgeInMonth) {

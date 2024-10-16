@@ -76,7 +76,7 @@ public class FFQCalculator {
                 if (foodItem.getServing() == null || foodItem.getServing().isEmpty())
                     amountOfServings = 1;
                 else
-                    amountOfServings = Double.parseDouble(foodItem.getServing().split(" ")[0]);
+                    amountOfServings = parseServingAmount(foodItem.getServing());
 
                 dailyFormulaServing = amountOfServings * foodItem.getFrequency();
 
@@ -101,7 +101,7 @@ public class FFQCalculator {
             if (foodItem.getServing() == null || foodItem.getServing().isEmpty())
                 amountOfServings = 1;
             else
-                amountOfServings = Double.parseDouble(foodItem.getServing().split(" ")[0]);
+                amountOfServings = parseServingAmount(foodItem.getServing());
 
             //if user selected daily frequency
             if (foodItem.getFrequencyType().equalsIgnoreCase("day")) {
@@ -232,6 +232,29 @@ public class FFQCalculator {
         //End of added code
         //===============================================================
         return results;
+    }
+
+    private static double parseServingAmount(String serving) {
+        String[] parts = serving.split(" ");
+        String amountStr = parts[0];
+        
+        // Handle fractions
+        if (amountStr.contains("/")) {
+            String[] fractionParts = amountStr.split("/");
+            return Double.parseDouble(fractionParts[0]) / Double.parseDouble(fractionParts[1]);
+        }
+        
+        // Handle special characters
+        switch (amountStr) {
+            case "¼":
+                return 0.25;
+            case "½":
+                return 0.5;
+            case "¾":
+                return 0.75;
+            default:
+                return Double.parseDouble(amountStr);
+        }
     }
 
     //Khalid Alamoudi - Added functions to create modified version of any map into the required 3 digit max criteria
